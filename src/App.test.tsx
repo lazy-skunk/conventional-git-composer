@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { HashRouter } from "react-router";
+import { BrowserRouter } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 
 import { App } from "./App";
 
-beforeEach(() => window.history.replaceState(null, "", "/conventional-git-composer/#/commits"));
+beforeEach(() => window.history.replaceState(null, "", "/commits"));
 
 afterEach(() => {
   cleanup();
@@ -15,11 +15,11 @@ afterEach(() => {
 test("validates a branch name, retains it through navigation, and copies it", async () => {
   const writeText = vi.fn().mockResolvedValue(undefined);
   vi.stubGlobal("navigator", { clipboard: { writeText } });
-  window.history.replaceState(null, "", "/conventional-git-composer/#/branch");
+  window.history.replaceState(null, "", "/branch");
   render(
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>,
+    </BrowserRouter>,
   );
   expect((screen.getByRole("button", { name: "Copy" }) as HTMLButtonElement).disabled).toBe(true);
   const description = screen.getByRole("textbox", { name: "Description" });
@@ -39,16 +39,16 @@ test("validates a branch name, retains it through navigation, and copies it", as
 });
 
 test("opens comments directly, follows browser history, and preserves input through the title", async () => {
-  window.history.replaceState(null, "", "/conventional-git-composer/#/comments");
+  window.history.replaceState(null, "", "/comments");
   render(
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>,
+    </BrowserRouter>,
   );
   expect(screen.getByRole("link", { name: "Comments" }).getAttribute("aria-current")).toBe("page");
   fireEvent.change(screen.getByLabelText("Subject"), { target: { value: "Clear naming." } });
   fireEvent.click(screen.getByRole("link", { name: "Conventional Git Composer" }));
-  expect(window.location.hash).toBe("#/commits");
+  expect(window.location.pathname).toBe("/commits");
   window.history.back();
   await waitFor(() =>
     expect(screen.getByRole("link", { name: "Comments" }).getAttribute("aria-current")).toBe(
@@ -62,9 +62,9 @@ test("copies footers and switches to a trunk branch without losing the descripti
   const writeText = vi.fn().mockResolvedValue(undefined);
   vi.stubGlobal("navigator", { clipboard: { writeText } });
   render(
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>,
+    </BrowserRouter>,
   );
   fireEvent.change(screen.getByRole("textbox", { name: "Description" }), {
     target: { value: "add login" },
@@ -93,9 +93,9 @@ test("preserves both composers when switching and copies the formatted comment",
   const writeText = vi.fn().mockResolvedValue(undefined);
   vi.stubGlobal("navigator", { clipboard: { writeText } });
   render(
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>,
+    </BrowserRouter>,
   );
   const description = screen.getByRole("textbox", { name: "Description" });
   fireEvent.change(description, { target: { value: "add empty state" } });
