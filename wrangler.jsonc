@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Top-level configuration
+  "name": "conventional-git-composer",
+  // Set this to today's date
+  "compatibility_date": "2026-10-31",
+}
