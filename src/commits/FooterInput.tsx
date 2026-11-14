@@ -12,7 +12,7 @@ type Props = {
 export function FooterInput({ rows, addRow, removeRow, updateRow }: Props) {
   return (
     <fieldset>
-      <legend className="text-sm font-medium">Footer (optional)</legend>
+      <legend>Footer (optional)</legend>
 
       <div className="bg-foreground/3 w-full space-y-2 rounded p-2">
         {rows.map((row) => (
@@ -28,7 +28,7 @@ export function FooterInput({ rows, addRow, removeRow, updateRow }: Props) {
         <button
           type="button"
           onClick={addRow}
-          className="cursor-pointer rounded bg-green-100 px-4 py-2 text-sm font-medium text-green-900 motion-safe:transition motion-safe:active:translate-y-px dark:bg-green-900 dark:text-green-100"
+          className="cursor-pointer rounded bg-green-100 px-4 py-2 text-green-900 motion-safe:transition motion-safe:active:translate-y-px dark:bg-green-900 dark:text-green-100"
         >
           Add footer
         </button>

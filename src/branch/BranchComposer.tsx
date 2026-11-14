@@ -17,15 +17,13 @@ export function BranchComposer() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <label htmlFor="branch-type" className="text-sm font-medium">
-          Type
-        </label>
+      <div className="grid gap-2">
+        <label htmlFor="branch-type">Type</label>
         <select
           id="branch-type"
           value={type}
           onChange={(event) => setType(event.target.value as BranchType)}
-          className="bg-foreground/3 w-full rounded p-2"
+          className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
         >
           {BRANCH_TYPE_OPTIONS.map((item) => (
             <option key={item.value} value={item.value} className="bg-background text-foreground">
@@ -35,23 +33,26 @@ export function BranchComposer() {
         </select>
       </div>
       {!isTrunkBranch(type) && (
-        <div>
-          <label htmlFor="branch-description" className="text-sm font-medium">
-            Description
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="branch-description">Description</label>
           <input
             id="branch-description"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             placeholder="add-login-page"
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
             {...descriptionError.inputProps}
           />
-          {descriptionError.error && (
-            <p id={descriptionError.errorId} className="text-sm text-red-500">
-              {descriptionError.error}
-            </p>
-          )}
+          <div role="alert" className="empty:absolute">
+            {descriptionError.error && (
+              <p
+                id={descriptionError.errorId}
+                className="text-red-500 motion-safe:transition-opacity motion-safe:starting:opacity-0"
+              >
+                {descriptionError.error}
+              </p>
+            )}
+          </div>
         </div>
       )}
       <PreviewPanel text={name}>

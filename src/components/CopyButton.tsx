@@ -31,7 +31,7 @@ export function CopyButton({ text, variant, disabled = false }: Props) {
         type="button"
         disabled={disabled}
         onClick={() => void handleCopy()}
-        className={`disabled:bg-foreground/3 disabled:text-foreground/50 inline-flex cursor-pointer items-center gap-1 rounded px-4 py-2 text-sm font-medium disabled:cursor-not-allowed disabled:bg-none disabled:active:translate-y-0 motion-safe:transition motion-safe:active:translate-y-px ${variant === "comments" ? "bg-purple-100 text-purple-900 dark:bg-purple-900 dark:text-purple-100" : variant === "branch" ? "bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100" : "bg-linear-45 from-pink-100 to-orange-100 text-pink-900 dark:from-pink-900 dark:to-orange-900 dark:text-pink-100"}`}
+        className={`disabled:bg-foreground/3 disabled:text-foreground/50 inline-flex cursor-pointer items-center gap-2 rounded px-4 py-2 disabled:cursor-not-allowed disabled:bg-none disabled:active:translate-y-0 motion-safe:transition motion-safe:active:translate-y-px ${variant === "comments" ? "bg-purple-100 text-purple-900 dark:bg-purple-900 dark:text-purple-100" : variant === "branch" ? "bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100" : "bg-linear-45 from-pink-100 to-orange-100 text-pink-900 dark:from-pink-900 dark:to-orange-900 dark:text-pink-100"}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,9 +51,13 @@ export function CopyButton({ text, variant, disabled = false }: Props) {
         </svg>
         <span>{currentCopyResult?.success ? "Copied" : "Copy"}</span>
       </button>
-      {currentCopyResult?.success === false && (
-        <p className="text-sm text-red-500">Copy failed. Please copy the preview manually.</p>
-      )}
+      <div role="alert" className="empty:absolute">
+        {currentCopyResult?.success === false && (
+          <p className="text-red-500 motion-safe:transition-opacity motion-safe:starting:opacity-0">
+            Copy failed. Please copy the preview manually.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

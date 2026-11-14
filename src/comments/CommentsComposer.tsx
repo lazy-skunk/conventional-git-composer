@@ -24,15 +24,13 @@ export function CommentsComposer() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <label htmlFor="comment-label" className="text-sm font-medium">
-          Label
-        </label>
+      <div className="grid gap-2">
+        <label htmlFor="comment-label">Label</label>
         <select
           id="comment-label"
           value={label}
           onChange={(event) => setLabel(event.target.value as CommentLabel)}
-          className="bg-foreground/3 w-full rounded p-2"
+          className="bg-foreground/3 hover:bg-foreground/6 min-w-0 rounded p-2 motion-safe:transition-colors"
         >
           {COMMENT_LABEL_OPTIONS.map((item) => (
             <option key={item.value} value={item.value} className="bg-background text-foreground">
@@ -41,15 +39,13 @@ export function CommentsComposer() {
           ))}
         </select>
       </div>
-      <div>
-        <label htmlFor="comment-decorations" className="text-sm font-medium">
-          Decorations (optional)
-        </label>
+      <div className="grid gap-2">
+        <label htmlFor="comment-decorations">Decorations (optional)</label>
         <select
           id="comment-decorations"
           value={decoration}
           onChange={(event) => setDecoration(event.target.value)}
-          className="bg-foreground/3 w-full rounded p-2"
+          className="bg-foreground/3 hover:bg-foreground/6 min-w-0 rounded p-2 motion-safe:transition-colors"
         >
           <option value="" className="bg-background text-foreground">
             none
@@ -65,35 +61,36 @@ export function CommentsComposer() {
           </option>
         </select>
       </div>
-      <div>
-        <label htmlFor="comment-subject" className="text-sm font-medium">
-          Subject
-        </label>
+      <div className="grid gap-2">
+        <label htmlFor="comment-subject">Subject</label>
         <input
           id="comment-subject"
           {...subjectError.inputProps}
           value={subject}
           onChange={(event) => setSubject(event.target.value)}
           placeholder="This is not worded correctly."
-          className="bg-foreground/3 w-full rounded p-2"
+          className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
         />
-        {subjectError.error && (
-          <p id={subjectError.errorId} className="text-sm text-red-500">
-            {subjectError.error}
-          </p>
-        )}
+        <div role="alert" className="empty:absolute">
+          {subjectError.error && (
+            <p
+              id={subjectError.errorId}
+              className="text-red-500 motion-safe:transition-opacity motion-safe:starting:opacity-0"
+            >
+              {subjectError.error}
+            </p>
+          )}
+        </div>
       </div>
-      <div>
-        <label htmlFor="comment-discussion" className="text-sm font-medium">
-          Discussion (optional)
-        </label>
+      <div className="grid gap-2">
+        <label htmlFor="comment-discussion">Discussion (optional)</label>
         <textarea
           id="comment-discussion"
           value={discussion}
           onChange={(event) => setDiscussion(event.target.value)}
           placeholder="Can we change this to match the wording of the marketing page?"
           rows={3}
-          className="bg-foreground/3 w-full rounded p-2"
+          className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
         />
       </div>
       <PreviewPanel text={preview}>

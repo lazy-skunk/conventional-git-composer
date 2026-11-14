@@ -18,15 +18,13 @@ export function CommitsComposer() {
   return (
     <div className="space-y-4">
       <div className="space-y-4">
-        <div>
-          <label htmlFor="commit-type" className="text-sm font-medium">
-            Type
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="commit-type">Type</label>
           <select
             id="commit-type"
             value={composer.commitType}
             onChange={(event) => composer.setCommitType(event.target.value as CommitType)}
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
           >
             {COMMIT_TYPE_OPTIONS.map(({ value, description }) => (
               <option key={value} value={value} className="bg-background text-foreground">
@@ -36,66 +34,63 @@ export function CommitsComposer() {
           </select>
         </div>
 
-        <div>
-          <label htmlFor="scope" className="text-sm font-medium">
-            Scope (optional)
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="scope">Scope (optional)</label>
 
           <input
             id="scope"
             value={composer.scope}
             onChange={(event) => composer.setScope(event.target.value)}
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
             placeholder="lang"
           />
         </div>
 
-        <div>
-          <label htmlFor="description" className="text-sm font-medium">
-            Description
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="description">Description</label>
 
           <input
             id="description"
             {...descriptionError.inputProps}
             value={composer.description}
             onChange={(event) => composer.setDescription(event.target.value)}
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
             placeholder="add Polish language"
           />
-          {descriptionError.error && (
-            <p id={descriptionError.errorId} className="text-sm text-red-500">
-              {descriptionError.error}
-            </p>
-          )}
+          <div role="alert" className="empty:absolute">
+            {descriptionError.error && (
+              <p
+                id={descriptionError.errorId}
+                className="text-red-500 motion-safe:transition-opacity motion-safe:starting:opacity-0"
+              >
+                {descriptionError.error}
+              </p>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="body" className="text-sm font-medium">
-            Body (optional)
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="body">Body (optional)</label>
 
           <textarea
             id="body"
             value={composer.body}
             onChange={(event) => composer.setBody(event.target.value)}
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
             rows={3}
             placeholder="Introduce a request id and a reference to latest request."
           />
         </div>
 
-        <div>
-          <label htmlFor="breaking-change-style" className="text-sm font-medium">
-            Breaking change
-          </label>
+        <div className="grid gap-2">
+          <label htmlFor="breaking-change-style">Breaking change</label>
           <select
             id="breaking-change-style"
             value={composer.breakingChangeStyle}
             onChange={(event) =>
               composer.setBreakingChangeStyle(event.target.value as BreakingChangeStyle)
             }
-            className="bg-foreground/3 w-full rounded p-2"
+            className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
           >
             {BREAKING_CHANGE_OPTIONS.map((option) => (
               <option
@@ -109,25 +104,28 @@ export function CommitsComposer() {
           </select>
 
           {isBreakingChangeDescriptionRequired(composer.breakingChangeStyle) && (
-            <div className="mt-2">
-              <label htmlFor="breaking-change-description" className="text-sm font-medium">
-                Breaking change description
-              </label>
+            <div className="grid gap-2">
+              <label htmlFor="breaking-change-description">Breaking change description</label>
               <textarea
                 id="breaking-change-description"
                 {...breakingChangeError.inputProps}
                 value={composer.breakingChangeDescription}
                 name="breaking_change_description"
                 onChange={(event) => composer.setBreakingChangeDescription(event.target.value)}
-                className="bg-foreground/3 w-full rounded p-2"
+                className="bg-foreground/3 hover:bg-foreground/6 rounded p-2 motion-safe:transition-colors"
                 rows={2}
                 placeholder="use JavaScript features not available in Node 6."
               />
-              {breakingChangeError.error && (
-                <p id={breakingChangeError.errorId} className="text-sm text-red-500">
-                  {breakingChangeError.error}
-                </p>
-              )}
+              <div role="alert" className="empty:absolute">
+                {breakingChangeError.error && (
+                  <p
+                    id={breakingChangeError.errorId}
+                    className="text-red-500 motion-safe:transition-opacity motion-safe:starting:opacity-0"
+                  >
+                    {breakingChangeError.error}
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </div>
